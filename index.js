@@ -16,28 +16,42 @@ app.use(express.static('public'));
 
 
 app.get('/', async (req, res) => {
-  const questions = await Question.findAll({ raw: true });
-  console.log(questions);
-  res.render('index', {
+  const questions = await Question.findAll({ raw: true, order: [
+    ['id', 'DESC']
+  ] });
+  return res.render('index', {
     questions
   });
 });
 
 app.get('/question', (req, res) => {
-  res.render('question');
+  return res.render('createQuestion');
 });
 
 app.post('/savequestion', async (req, res) => {
   const { title, description } = req.body;
+  await Question.create({ title,description });
+  return res.redirect('/');
+});
 
-  await Question.create({
-    title,
-    description
+app.get('/question/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const question = await Question.findOne({
+    raw: true,
+    where: { id: +id }
   });
 
-  res.redirect('/');
+  if (question) {
+    return res.render('question', {
+      question
+    });
+  }
+  return res.redirect('/');
 
 });
+
+
 
 
 

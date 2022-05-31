@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
+const connection = require('./database/connection');
+const Question = require('./database/models/Question');
+
 
 const PORT = 3000;
 
@@ -12,18 +15,28 @@ app.use(express.json());
 app.use(express.static('public'));
 
 
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  const questions = await Question.findAll({ raw: true });
+  console.log(questions);
+  res.render('index', {
+    questions
+  });
 });
 
 app.get('/question', (req, res) => {
   res.render('question');
 });
 
-app.post('/savequestion', (req, res) => {
-  const { title } = req.body;
-  const { description } = req.body
-  res.send(`titulo: ${title}, descricao: ${description}`);
+app.post('/savequestion', async (req, res) => {
+  const { title, description } = req.body;
+
+  await Question.create({
+    title,
+    description
+  });
+
+  res.redirect('/');
+
 });
 
 

@@ -28,12 +28,12 @@ O principal objetivo foi desenvolver uma plataforma para absorver os fundamentos
 
 ### Roadmap:
 
-[] - Definição e criação da estrutura do banco de dados.
-[] - Desenvolvimento da estrutura básica do front-end com o Bootstrap.
-[] - Desenvovimento das rotas inicias com o Express.
-[] - Link das rotas com o banco de dados.
-[] - desenvolvimento de rotas dinâmicas.
-[] - Alimentação dinâmica do front-end.
+- [ ] - Definição e criação da estrutura do banco de dados.
+- [ ] - Desenvolvimento da estrutura básica do front-end com o Bootstrap.
+- [ ] - Desenvovimento das rotas inicias com o Express.
+- [ ] - Link das rotas com o banco de dados.
+- [ ] - Desenvolvimento de rotas dinâmicas.
+- [ ] - Alimentação dinâmica do front-end.
 
 
 

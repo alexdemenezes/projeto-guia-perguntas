@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser')
 const connection = require('./database/connection');
 const Question = require('./database/models/Question');
+const Answer = require('./database/models/Answer');
 
 
 const PORT = 3000;
@@ -16,25 +17,51 @@ app.use(express.static('public'));
 
 
 app.get('/', async (req, res) => {
-  const questions = await Question.findAll({ raw: true, order: [
-    ['id', 'DESC']
-  ] });
-  return res.render('index', {
-    questions
-  });
+  try {
+    const questions = await Question.findAll({ raw: true, order: [
+      ['id', 'DESC']
+    ]});
+    return res.render('index', {
+      questions
+    });
+  } catch (e) {
+    return res.staus(500).json({message: 'internal error'});
+  }
 });
 
 app.get('/question', (req, res) => {
-  return res.render('createQuestion');
+  try {
+    return res.render('createQuestion');
+  } catch (e) {
+    return res.staus(500).json({message: 'internal error'});
+  }
 });
 
 app.post('/savequestion', async (req, res) => {
-  const { title, description } = req.body;
-  await Question.create({ title,description });
-  return res.redirect('/');
+  try {
+    const { title, description } = req.body;
+    await Question.create({ title,description });
+    return res.redirect('/');
+  } catch (e) {
+    return res.staus(500).json({message: 'internal error'});
+  }
+});
+
+app.post('/answer', async (req, res) => {
+  try {
+    const { body, questionId } = req.body;
+    await Answer.create({
+      body,
+      questionId
+    });
+    res.redirect(`/question/${questionId}`);
+  } catch (e) {
+    return res.staus(500).json({message: 'internal error'});
+  }
 });
 
 app.get('/question/:id', async (req, res) => {
+try {
   const { id } = req.params;
 
   const question = await Question.findOne({
@@ -48,7 +75,9 @@ app.get('/question/:id', async (req, res) => {
     });
   }
   return res.redirect('/');
-
+} catch (e) {
+  return res.staus(500).json({message: 'internal error'});
+}
 });
 
 

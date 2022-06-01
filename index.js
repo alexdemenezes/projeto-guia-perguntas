@@ -64,6 +64,16 @@ app.get('/question/:id', async (req, res) => {
 try {
   const { id } = req.params;
 
+  const answers = await Answer.findAll({
+    where: {
+      questionId: id
+    },
+    raw: true,
+    order: [
+      ['id', 'DESC']
+    ]
+  })
+
   const question = await Question.findOne({
     raw: true,
     where: { id: +id }
@@ -71,7 +81,8 @@ try {
 
   if (question) {
     return res.render('question', {
-      question
+      question,
+      answers
     });
   }
   return res.redirect('/');

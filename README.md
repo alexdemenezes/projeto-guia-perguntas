@@ -24,6 +24,9 @@
 
 
 <a data-flickr-embed="true" href="https://www.flickr.com/photos/195826848@N08/52116993413/in/dateposted-public/" title="page-answer-question"><img src="https://live.staticflickr.com/65535/52116993413_25fdb9b6ab.jpg" width="500" height="238" alt="page-answer-question"></a>
+
+
+
 ### Tecnologias utilizadas no desenvolvimento:
 
 - EJS
